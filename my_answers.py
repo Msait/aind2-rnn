@@ -14,10 +14,8 @@ def window_transform_series(series, window_size):
     y = []
 
     # get P-T points
-    for i in range(len(series)-window_size + 1):
-        X.append(series[i:i+window_size])
-    for i in range(window_size, len(series)):    
-        y.append(series[i])  
+    X = [series[i:i+window_size] for i in range(len(series)-window_size)]
+    y = [series[i] for i in range(window_size, len(series))] 
 
     # reshape each 
     X = np.asarray(X)
@@ -29,8 +27,10 @@ def window_transform_series(series, window_size):
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
-    pass
-
+    model = Sequential()
+    model.add(LSTM(5, input_shape=(7, 1)))
+    model.add(Dense(1))
+    return model
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
