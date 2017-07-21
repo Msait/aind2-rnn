@@ -35,7 +35,7 @@ def build_part1_RNN(window_size):
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
-    to_remove = ['-', '\'','(', ')', "\"", '&', 'é', '/', '*', '@', '$' ]
+    to_remove = ['-', '\'','(', ')', "\"", '&', 'é','à','â','è', '/', '*', '@', '$' ]
     # show all uniques char to further filter
     unique = {}
     for ch in text:
@@ -60,11 +60,17 @@ def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
-    inputs = [text[i:i+window_size] for i in range(0, len(text)-window_size, step_size)]
-    outputs = [text[i] for i in range(window_size, len(text)-window_size, step_size)]
+    import math
+    num_of_pairs = math.ceil((len(text) - window_size) / step_size)
+    inputs = [text[i*step_size:i*step_size+window_size] for i in range(num_of_pairs)]
+    outputs = [text[window_size + i*step_size] for i in range(num_of_pairs)]
     return inputs,outputs
 
 # TODO build the required RNN model: 
 # a single LSTM hidden layer with softmax activation, categorical_crossentropy loss 
 def build_part2_RNN(window_size, num_chars):
-    pass
+    model = Sequential()
+    model.add(LSTM(200, input_shape = (window_size, num_chars)))
+    model.add(Dense(num_chars))
+    model.add(Dense(num_chars, activation="softmax"))
+    return model
