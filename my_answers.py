@@ -37,6 +37,14 @@ def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
     to_remove = ['-', '\'','(', ')', "\"", '&', 'é','à','â','è', '/', '*', '@', '$' ]
     # show all uniques char to further filter
+    
+    tmp_text = list(text)
+    for ch_idx, ch in enumerate(tmp_text):
+        if ch not in punctuation and ch in to_remove:
+            tmp_text[ch_idx] = ''
+
+    text = ''.join(tmp_text)
+
     unique = {}
     for ch in text:
         if ch in unique:
@@ -45,14 +53,7 @@ def cleaned_text(text):
             unique[ch] = 0
     
     unique = dict([(k, v) for k,v in unique.items() if v != 0]) 
-    print(unique)
-    
-    tmp_text = list(text)
-    for ch_idx, ch in enumerate(tmp_text):
-        if ch not in punctuation and ch in to_remove:
-            tmp_text[ch_idx] = ''
-
-    text = ''.join(tmp_text)
+    print("Unique chars after clean up: %s" % unique)
     return text
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
