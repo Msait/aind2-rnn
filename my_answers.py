@@ -35,7 +35,7 @@ def build_part1_RNN(window_size):
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
-    to_remove = ['-', '\'','(', ')', "\"", '&', 'é','à','â','è', '/', '*', '@', '$' ]
+    to_remove = ['-', '%', '\'','(', ')', "\"", '&', 'é','à','â','è', '/', '*', '@', '$' ]
     # show all uniques char to further filter
     
     tmp_text = list(text)
